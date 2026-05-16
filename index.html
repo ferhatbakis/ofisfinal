@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Türkiye'ye İnternetin Gelişi</title>
+    
+    <!-- Google Fonts: Premium görünüm için Playfair Display ve Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        premiumBlack: '#050505',
+                        panelBlack: '#111111',
+                        gold: '#D4AF37',       /* Klasik Metalik Gold */
+                        goldLight: '#F3E5AB',
+                        goldDark: '#996515',
+                        glassBorder: 'rgba(212, 175, 55, 0.15)'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #050505;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(212, 175, 55, 0.04), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(212, 175, 55, 0.04), transparent 25%);
+            background-attachment: fixed;
+            color: #d1d5db; /* gray-300 */
+        }
+
+        /* Premium Glassmorphism */
+        .glass-panel {
+            background: rgba(15, 15, 15, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glassBorder);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Gold Gradient Text */
+        .text-gold-gradient {
+            background: linear-gradient(to right, #D4AF37, #F3E5AB, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 4s linear infinite;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
+
+        /* Etkileşimli Objeler */
+        .tab-btn {
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .tab-btn::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: all 0.4s ease;
+        }
+        .tab-btn:hover::before { left: 100%; }
+        
+        .tab-btn.active {
+            background: rgba(212, 175, 55, 0.08);
+            border-left-color: #D4AF37;
+            color: #D4AF37;
+        }
+
+        .fade-content { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Terminal - Retro ama şık çerçeveli */
+        .terminal { font-family: 'Fira Code', monospace; color: #10b981; background: #000; box-shadow: inset 0 0 20px rgba(0, 0, 0, 1); }
+        .cursor { display: inline-block; width: 8px; height: 1.2em; background: #10b981; animation: blink 1s step-end infinite; vertical-align: bottom;}
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 2px; }
+
+        /* Akordeon */
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; }
+        .accordion-content.expanded { max-height: 800px; }
+    </style>
+</head>
+<body class="antialiased selection:bg-gold selection:text-black">
+
+    <!-- Navigasyon -->
+    <nav class="fixed w-full z-50 glass-panel border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full border border-gold/40 flex items-center justify-center text-gold shadow-[0_0_15px_rgba(212,175,55,0.2)]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    </div>
+                    <span class="font-serif font-bold text-xl tracking-widest text-gold-gradient">Bil'T: Türkiye'ye İnternetin Gelişi</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-6">
+                        <a href="#koleksiyon" class="text-sm font-medium text-gray-300 hover:text-gold transition-colors tracking-wide">Zaman Çizelgesi</a>
+                        <a href="#deneyim" class="text-sm font-medium text-gray-300 hover:text-gold transition-colors tracking-wide">Etkileşim</a>
+                        <a href="#analiz" class="text-sm font-medium text-gray-300 hover:text-gold transition-colors tracking-wide">Akademik Külliyat</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Bölümü -->
+    <section class="pt-40 pb-24 px-4 relative">
+        <div class="max-w-5xl mx-auto text-center fade-content">
+            <p class="text-gold font-mono text-sm tracking-[0.3em] uppercase mb-6">Akademik Bir Merakın Fiziksel Evrimi</p>
+            <h1 class="text-5xl md:text-7xl font-serif font-bold mb-8 leading-tight text-white drop-shadow-2xl">
+                Türkiye'nin İnterneti: <br>
+                <span class="text-gold-gradient italic">64 Kbps'lik Büyük Serüven</span>
+            </h1>
+            <p class="text-lg text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
+                1986'da akademik koridorlarda başlayan veri iletimi; altyapı, cesaret ve vizyon ile büyüyerek bugün 63 milyonluk devasa bir bilgi toplumuna dönüştü. Geçmişi okumak yerine, etkileşimli panellerle dijital devrimi bizzat deneyimleyin.
+            </p>
+            
+            <div class="mt-16 flex flex-col md:flex-row justify-center items-center gap-8 text-xs text-gray-500 font-mono tracking-wider border-t border-white/10 pt-8 max-w-2xl mx-auto">
+                <span class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-gold rounded-full"></div> Araştırmacılar: Hafsanur İLİ, Ferhat BAKIŞ</span>
+                <span class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-gold rounded-full"></div> Danışman: Can Arslan</span>
+                <span class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-gold rounded-full"></div> Yıl: 2026</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Zaman Tüneli Koleksiyonu -->
+    <section id="koleksiyon" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-12">
+                
+                <!-- Sol Panel - Yıl Seçiciler -->
+                <div class="w-full lg:w-1/3">
+                    <h2 class="text-3xl font-serif font-bold text-white mb-2">Tarihsel Dönümler</h2>
+                    <p class="text-gray-400 text-sm mb-8 font-light">Detayları keşfetmek için bir döneme tıklayın.</p>
+                    
+                    <div class="flex flex-col space-y-2 h-[500px] overflow-y-auto pr-4" id="timeline-tabs">
+                        <!-- JS Dolduracak -->
+                    </div>
+                </div>
+
+                <!-- Sağ Panel - İçerik Vitrini -->
+                <div class="w-full lg:w-2/3 glass-panel rounded-2xl p-10 md:p-14 relative min-h-[500px] flex flex-col justify-center">
+                    <div class="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_top_right,rgba(212,175,55,0.05),transparent_50%)] pointer-events-none rounded-2xl"></div>
+                    
+                    <div id="timeline-content" class="relative z-10">
+                        <!-- JS İçerik Inject Edecek -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Etkileşimli Simülatörler -->
+    <section id="deneyim" class="py-24 bg-black relative border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-gold-gradient mb-4">Uygulamalı Teori Paneli</h2>
+                <p class="text-gray-400 font-light max-w-2xl mx-auto">Öğrenme sürecini derinleştirmek için hazırlanan canlı simülasyon araçları.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                
+                <!-- Hız Yarışı -->
+                <div class="glass-panel rounded-2xl p-8 border border-white/5">
+                    <div class="flex items-center gap-3 mb-8 pb-4 border-b border-white/10">
+                        <svg class="text-gold w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <h3 class="text-xl font-serif text-white">Bant Genişliği Kıyaslaması</h3>
+                    </div>
+                    
+                    <p class="text-sm text-gray-400 mb-8 font-light">64 Kbps'lik ilk internet altyapısı ile günümüz 100 Mbps fiber hızını 1 Gigabayt'lık veri indirme senaryosu üzerinden yarışlatın.</p>
+
+                    <!-- 1993 PTT -->
+                    <div class="mb-8">
+                        <div class="flex justify-between text-xs font-mono mb-2 text-gray-300">
+                            <span>1993: PTT Kiralık Hat (64 Kbps)</span>
+                            <span id="speed-perc-1" class="text-gold">0.00%</span>
+                        </div>
+                        <div class="w-full bg-[#111] rounded-full h-2 border border-white/10 overflow-hidden relative">
+                            <div id="bar-1" class="h-full bg-gold/50 w-0 transition-all duration-75"></div>
+                        </div>
+                        <p id="eta-1" class="text-[10px] text-right mt-2 text-gray-500 bold font-mono uppercase tracking-wider">Teorik Süre: ~4.5 Gün</p>
+                    </div>
+                    
+                    <!-- 2024 Fiber -->
+                    <div class="mb-10">
+                        <div class="flex justify-between text-xs font-mono mb-2 text-gray-300">
+                            <span>2026: FTTH Fiber (100 Mbps)</span>
+                            <span id="speed-perc-2" class="text-white">0%</span>
+                        </div>
+                        <div class="w-full bg-[#111] rounded-full h-2 border border-white/10 overflow-hidden relative">
+                            <div id="bar-2" class="h-full bg-white w-0 transition-all duration-75"></div>
+                        </div>
+                        <p id="eta-2" class="text-[10px] text-right mt-2 text-gray-500 font-mono uppercase tracking-wider">Teorik Süre: ~1.5 Dakika</p>
+                    </div>
+
+                    <button id="btn-race" onclick="startRace()" class="w-full bg-transparent border border-gold text-gold hover:bg-gold hover:text-black px-6 py-3 rounded-lg font-mono text-sm tracking-widest transition-all duration-300">
+                        [ SİMÜLASYONU BAŞLAT ]
+                    </button>
+                </div>
+
+                <!-- Terminal Simülatörü -->
+                <div class="glass-panel rounded-2xl flex flex-col border border-white/5 overflow-hidden">
+                    <div class="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#0a0a0a]">
+                        <div class="flex items-center gap-3">
+                            <svg class="text-gold w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 17l6-6-6-6M12 19h8"></path></svg>
+                            <span class="text-sm font-mono text-gray-300">Cisco Yönlendirici Erişimi (1993)</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
+                        </div>
+                    </div>
+
+                    <div class="relative flex-grow h-80 p-4 bg-black">
+                        <!-- Terminal Çıktısı -->
+                        <div id="term-screen" class="terminal absolute inset-0 p-5 hidden flex-col z-10">
+                            <div id="term-output" class="flex-grow overflow-y-auto space-y-1.5 text-xs md:text-sm"></div>
+                            <div class="mt-2 text-xs md:text-sm"><span class="text-white">root@odtu:~#</span> <span id="term-input" class="text-gold"></span><span class="cursor"></span></div>
+                        </div>
+                        
+                        <!-- Terminal Başlatıcı -->
+                        <div id="term-overlay" class="absolute inset-0 flex flex-col items-center justify-center z-20 bg-black/90 p-8 text-center border-t border-white/5">
+                            <h3 class="font-serif text-2xl text-gold mb-3">Tarihe Bağlanın</h3>
+                            <p class="text-xs text-gray-400 mb-8 font-mono leading-relaxed">
+                                Tarih: 12 Nisan 1993<br>Konum: ODTÜ Sistem Odası<br>Protokol: TCP/IP via X.25
+                            </p>
+                            <button onclick="startTerminal()" class="bg-gold text-black hover:bg-goldLight px-8 py-2.5 rounded font-mono text-xs font-bold tracking-widest shadow-[0_0_20px_rgba(212,175,55,0.3)] transition-all">
+                                Bağlantıyı Başlat
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Akademik Külliyat (Akordeon) -->
+    <section id="analiz" class="py-24">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-serif font-bold text-white mb-4">Akademik Külliyat & Analiz</h2>
+                <p class="text-gray-400 font-light text-sm">Detaylı okuma ve veri teyidi için başlıkları genişletin.</p>
+            </div>
+
+            <div class="space-y-4">
+                
+                <!-- Akordeon 1 -->
+                <div class="glass-panel border border-white/10 rounded-xl overflow-hidden">
+                    <button class="w-full px-8 py-5 text-left flex justify-between items-center hover:bg-white/5 transition-colors focus:outline-none" onclick="toggleAcc('acc1', this)">
+                        <span class="font-serif font-semibold text-lg text-gold">Mustafa Akgül'ün Vizyonu ve Sivil İnisiyatif</span>
+                        <svg class="w-5 h-5 text-gold transform transition-transform duration-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="acc1" class="accordion-content bg-[#0a0a0a]">
+                        <div class="px-8 py-6 text-sm text-gray-400 leading-loose border-t border-white/5 font-light">
+                            <p class="mb-4">"İnternetin Babası" olarak bilinen Doç. Dr. Mustafa Akgül, interneti yalnızca teknik bir altyapı olarak değil, sarsılmaz bir <strong>'demokrasi ve özgürlük alanı'</strong> olarak tanımlamıştır. Onun vizyonu üç ana esasa dayanır:</p>
+                            <ul class="list-disc pl-5 space-y-2 mb-4">
+                                <li><strong class="text-gray-200">İnternetin Toplumsallaşması:</strong> Ağın sadece akademisyenlerin tekelinde kalmayıp kırsaldaki vatandaşa kadar ulaştırılması.</li>
+                                <li><strong class="text-gray-200">Demokrasiye Katkı:</strong> Bilginin sansürsüz dolaşımının katılımcı demokrasinin teminatı olduğu inancı.</li>
+                                <li><strong class="text-gray-200">Sivil Katılım:</strong> 1998'den itibaren kutlanmaya başlanan "İnternet Haftası" sayesinde, dijitalleşmenin bir devlet projesinden çıkarak bir halk hareketine dönüştürülmesi.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Akordeon 2 -->
+                <div class="glass-panel border border-white/10 rounded-xl overflow-hidden">
+                    <button class="w-full px-8 py-5 text-left flex justify-between items-center hover:bg-white/5 transition-colors focus:outline-none" onclick="toggleAcc('acc2', this)">
+                        <span class="font-serif font-semibold text-lg text-gold">Dijital Ekonomi: Güven Bariyeri Nasıl Aşıldı?</span>
+                        <svg class="w-5 h-5 text-gold transform transition-transform duration-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="acc2" class="accordion-content bg-[#0a0a0a]">
+                        <div class="px-8 py-6 text-sm text-gray-400 leading-loose border-t border-white/5 font-light">
+                            <p class="mb-4">1995 yılında <em>isiticaret.com</em> ve 1996'da <em>istanbul.com</em> ile başlayan ticari denemeler, tüketicinin kredi kartı güvenliği korkusu sebebiyle tıkanmıştı. Bu bariyer, dijital bir mimari olan <strong>Sıfır Risk Modeli</strong> ile aşıldı.</p>
+                            <p>Bu modelde ödeme, doğrudan satıcıya gitmek yerine güvenli bir e-ticaret havuzunda (escrow) bekletilir. Alıcı ürünü teslim alıp onay verdiğinde para satıcıya aktarılır. Bu yenilikçi yaklaşım, Türk tüketicisinin internetten alışveriş korkusunu yenmiş ve Hepsiburada, GittiGidiyor gibi platformların devleşmesini sağlamıştır.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Akordeon 3 -->
+                <div class="glass-panel border border-white/10 rounded-xl overflow-hidden">
+                    <button class="w-full px-8 py-5 text-left flex justify-between items-center hover:bg-white/5 transition-colors focus:outline-none" onclick="toggleAcc('acc3', this)">
+                        <span class="font-serif font-semibold text-lg text-gold">Veri Doğrulama ve Araştırma Yöntemi</span>
+                        <svg class="w-5 h-5 text-gold transform transition-transform duration-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="acc3" class="accordion-content bg-[#0a0a0a]">
+                        <div class="px-8 py-6 text-sm text-gray-400 leading-loose border-t border-white/5 font-light">
+                            <p class="mb-4">Bu projede yapay zeka çıktılarının halüsinasyon (hallucination) riskini elimine etmek için <strong>ODTÜ BİDB</strong> ve <strong>TÜBİTAK ULAKBİM</strong> arşivleri referans alınmıştır.</p>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li>Yapay zekanın 1987 EARN/BITNET bağlantısını "İnternet" olarak tanımlama hatası düzeltilmiştir. Bu bağlantının sadece bir WAN (Geniş Alan Ağı) e-posta aktarımı olduğu, gerçek TCP/IP bağlantısının 1993 olduğu teyit edilmiştir.</li>
+                                <li>İlk bağlantının teknik detayları (Cisco Router donanımı ve PTT X.25 altyapısının 64 Kbps kapasitesi) ODTÜ-TÜBİTAK TR-NET raporlarından çapraz doğrulanmıştır.</li>
+                                <li>Alan adı evrimi incelenirken, 2022'deki TRABİS geçişinin "belgeye dayalı bürokrasiden, ilk gelen alır (belgesiz) tahsise" geçişi hukuki metinlerle rafine edilmiştir.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-10 text-center bg-premiumBlack relative z-10">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col items-center">
+            <span class="font-serif font-bold text-gold mb-4 tracking-widest text-lg">Bil'T</span>
+            <p class="text-xs text-gray-600 font-mono">
+                Akademik Sunum Projesi // ODTÜ, TÜBİTAK Arşivleri Referans Alınmıştır.<br>
+                Tasarım Modeli: Premium Dark & Glassmorphism | HTML5, TailwindCSS
+            </p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT MANTIĞI -->
+    <script>
+        /* --- 1. ZAMAN TÜNELİ VERİ TABANI (Detaylandırılmış) --- */
+        const timelineData = [
+            { 
+                year: "1986", 
+                title: "İlk Kıvılcım: TÜVAKA", 
+                subtitle: "Türkiye Üniversiteler ve Araştırma Kurumları Ağı",
+                text: "İnternetin temeli sayılan ilk kurumsal ağ kuruldu. Sinclair ZX Spectrum ve Commodore 64 gibi kişisel cihazların Türkiye'ye girişiyle, donanım devrimi ve ilk bilgisayar okuryazarlığı (tekno-elit kesim) oluşmaya başladı."
+            },
+            { 
+                year: "1987", 
+                title: "Geniş Alan Ağı: BITNET", 
+                subtitle: "İlk E-posta Transferi",
+                text: "ODTÜ'deki devasa IBM 3090 ana bilgisayarı üzerinden Avrupa ve ABD'ye uzanan EARN/BITNET ağlarına erişim sağlandı. Türkiye, küresel ağ üzerinden yurtdışına ilk e-postasını gönderdi."
+            },
+            { 
+                year: "1992", 
+                title: "X.25 Hollanda Testi", 
+                subtitle: "Uluslararası Bağlantı Denemeleri",
+                text: "İnternet öncesi dönemde yerel BBS (Duyuru Tahtası) ağları 'HitNet' ile birleşirken; Hollanda ile yapılan başarılı X.25 paket anahtarlama testi, Türkiye'nin TCP/IP internetine geçişinde en önemli teknik zemin oldu."
+            },
+            { 
+                year: "1993", 
+                title: "İnternetin Resmi Doğuşu", 
+                subtitle: "12 Nisan: 64 Kbps Darboğazı",
+                text: "ODTÜ sistem salonundaki Cisco yönlendiriciler üzerinden, PTT'den sağlanan X.25 'Kiralık Hat' ile ABD Washington'daki NSFNet'e gerçek TCP/IP bağlantısı kuruldu. Türkiye internete saniyede sadece 64 Kilobit hızla 'Merhaba' dedi."
+            },
+            { 
+                year: "1996", 
+                title: "Çift Omurga Stratejisi", 
+                subtitle: "Ticari TURNET ve Akademik ULAKNET",
+                text: "Üniversitelerin 1993-1996 arası ağa katılmasının ardından veri yükü arttı. Ticari ve bireysel trafik için PTT bünyesinde TURNET, akademik/bilimsel veri için ise TÜBİTAK ULAKBİM yönetiminde yüksek hızlı ULAKNET faaliyete geçti."
+            },
+            { 
+                year: "1999", 
+                title: "Dijital Kültür: Sözlük ve ADSL", 
+                subtitle: "Tüketiciden İçerik Üreticisine",
+                text: "Bireysel internet kullanıcıları için TTNet kuruldu ve çevirmeli ağdan (Dial-up) yüksek hıza geçiş başladı. Global sosyal medyadan yıllar önce, katılımcı kültürün atası sayılan Ekşi Sözlük kurularak ifade alanları dijitalleşti."
+            },
+            { 
+                year: "2022", 
+                title: "Bürokrasisiz Dijital Kimlik", 
+                subtitle: "TRABİS ve .tr Evrimi",
+                text: "Uzun yıllar ODTÜ bünyesinde ticaret sicil belgeleri istenerek yönetilen '.tr' alan adları, BTK bünyesindeki TRABİS'e devredildi. 'İlk gelen alır' prensibine dayalı belgesiz tahsis dönemi başladı."
+            },
+            { 
+                year: "2024", 
+                title: "Gigabit Bilgi Toplumu", 
+                subtitle: "Toplumsallaşma Vizyonunun Gerçekleşmesi",
+                text: "Mustafa Akgül'ün vizyonu gerçekleşti: 1993'te bir avuç akademisyenin kullandığı ağ, 63 milyon vatandaşa (nüfusun %88.8'i) ulaştı. Ortalama bir kullanıcı günde 7.5 saatini fiber altyapılarla desteklenen bu dijital habitatta geçiriyor."
+            }
+        ];
+
+        /* --- 2. ZAMAN TÜNELİ OLUŞTURMA --- */
+        const tabsContainer = document.getElementById('timeline-tabs');
+        const contentContainer = document.getElementById('timeline-content');
+
+        function initTimeline() {
+            timelineData.forEach((item, index) => {
+                const btn = document.createElement('button');
+                btn.className = `tab-btn w-full text-left px-6 py-4 font-mono text-sm rounded-lg border-l-2 mb-2 ${index === 3 ? 'active text-gold border-gold bg-gold/10' : 'text-gray-500 border-transparent hover:text-gray-300'}`;
+                btn.innerHTML = `<span class="font-bold relative z-10">${item.year}</span> <span class="text-xs ml-2 opacity-60 relative z-10 hidden md:inline-block">${item.title}</span>`;
+                btn.onclick = () => selectTab(index, btn);
+                tabsContainer.appendChild(btn);
+            });
+            renderContent(3); // Varsayılan 1993
+        }
+
+        function selectTab(index, clickedBtn) {
+            Array.from(tabsContainer.children).forEach(btn => {
+                btn.className = 'tab-btn w-full text-left px-6 py-4 font-mono text-sm rounded-lg border-l-2 mb-2 text-gray-500 border-transparent hover:text-gray-300';
+            });
+            clickedBtn.className = 'tab-btn active w-full text-left px-6 py-4 font-mono text-sm rounded-lg border-l-2 mb-2 text-gold border-gold bg-gold/10';
+            renderContent(index);
+        }
+
+        function renderContent(index) {
+            const data = timelineData[index];
+            contentContainer.innerHTML = `
+                <div class="fade-content h-full flex flex-col justify-center">
+                    <div class="inline-block px-3 py-1 bg-gold/10 border border-gold/20 text-gold font-mono text-xs tracking-widest uppercase mb-6 rounded w-max">
+                        Kayıt No: NODE_${data.year}
+                    </div>
+                    <h3 class="text-7xl md:text-8xl font-black text-white mb-4 opacity-10 absolute right-10 top-10 pointer-events-none">${data.year}</h3>
+                    <h4 class="text-3xl font-serif font-bold text-white mb-2">${data.title}</h4>
+                    <h5 class="text-gold text-sm font-mono mb-8 border-b border-white/10 pb-4">${data.subtitle}</h5>
+                    <p class="text-gray-400 text-base md:text-lg leading-relaxed font-light">${data.text}</p>
+                </div>
+            `;
+        }
+
+        /* --- 3. HIZ SİMÜLATÖRÜ --- */
+        let raceInterval;
+        function startRace() {
+            clearInterval(raceInterval);
+            const btn = document.getElementById('btn-race');
+            btn.innerText = "TEST_YÜRÜTÜLÜYOR...";
+            btn.className = "w-full bg-gold/20 border border-gold/50 text-gold px-6 py-3 rounded-lg font-mono text-sm tracking-widest cursor-not-allowed";
+            btn.disabled = true;
+
+            const bar1 = document.getElementById('bar-1');
+            const bar2 = document.getElementById('bar-2');
+            const perc1 = document.getElementById('speed-perc-1');
+            const perc2 = document.getElementById('speed-perc-2');
+
+            let p1 = 0; // PTT 64 Kbps (Çok Yavaş)
+            let p2 = 0; // FTTH 100 Mbps (Hızlı)
+
+            raceInterval = setInterval(() => {
+                p2 += 1.2; 
+                if (p2 >= 100) p2 = 100;
+                
+                p1 += 0.0004; 
+
+                bar2.style.width = `${p2}%`;
+                perc2.innerText = `${Math.floor(p2)}%`;
+                
+                bar1.style.width = `${p1}%`;
+                perc1.innerText = `${p1.toFixed(4)}%`;
+
+                if (p2 >= 100) {
+                    clearInterval(raceInterval);
+                    btn.innerText = "YARIŞ_TAMAMLANDI (FARKI_INCELEYIN)";
+                    btn.className = "w-full bg-transparent border border-gray-600 text-gray-500 px-6 py-3 rounded-lg font-mono text-sm tracking-widest";
+                    document.getElementById('eta-2').innerText = "INDİRME_BAŞARILI [OK]";
+                    document.getElementById('eta-2').className = "text-[10px] text-right mt-2 text-white font-bold font-mono tracking-wider";
+                }
+            }, 30);
+        }
+
+        /* --- 4. TERMİNAL SİMÜLATÖRÜ --- */
+        const termScreen = document.getElementById('term-screen');
+        const termOverlay = document.getElementById('term-overlay');
+        const termOutput = document.getElementById('term-output');
+        const termInput = document.getElementById('term-input');
+
+        const simSteps = [
+            { text: "configure terminal", type: "cmd", delay: 600 },
+            { text: "Enter configuration commands, one per line.", type: "out", delay: 200 },
+            { text: "interface serial 0", type: "cmd", delay: 500 },
+            { text: "encapsulation x25", type: "cmd", delay: 500 },
+            { text: "no shutdown", type: "cmd", delay: 500 },
+            { text: "%LINK-3-UPDOWN: Interface Serial0, changed state to up", type: "out", delay: 800 },
+            { text: "ping 192.231.161.1", type: "cmd", delay: 800 },
+            { text: "Type escape sequence to abort.", type: "out", delay: 200 },
+            { text: "Sending 5, 100-byte ICMP Echos to 192.231.161.1, timeout is 2 seconds:", type: "out", delay: 400 },
+            { text: "!!!!!", type: "out", delay: 1500 }, // Cisco style ping response
+            { text: "Success rate is 100 percent (5/5), round-trip min/avg/max = 845/848/850 ms", type: "out", delay: 500 },
+            { text: "BGP SESSION ESTABLISHED. 64Kbps connection to NSFNet verified.", type: "out", color: "text-white bg-green-800/40 font-bold", delay: 800 }
+        ];
+
+        let simIsRunning = false;
+
+        async function startTerminal() {
+            if(simIsRunning) return;
+            simIsRunning = true;
+            termOverlay.style.display = 'none';
+            termScreen.style.display = 'flex';
+            termOutput.innerHTML = '';
+            termInput.innerText = '';
+            
+            for (let step of simSteps) {
+                await new Promise(r => setTimeout(r, step.delay));
+                
+                if (step.type === "cmd") {
+                    for(let i=0; i<step.text.length; i++){
+                        termInput.innerText += step.text[i];
+                        await new Promise(r => setTimeout(r, 40));
+                    }
+                    await new Promise(r => setTimeout(r, 200));
+                    termOutput.innerHTML += `<div><span class="text-white">root@odtu:~#</span> <span class="text-gold">${step.text}</span></div>`;
+                    termInput.innerText = '';
+                } else {
+                    let styleClass = step.color ? step.color : "text-[#10b981]";
+                    termOutput.innerHTML += `<div class="${styleClass}">${step.text}</div>`;
+                }
+                termOutput.scrollTop = termOutput.scrollHeight;
+            }
+            
+            setTimeout(() => {
+                simIsRunning = false;
+                termOverlay.style.display = 'flex';
+                termScreen.style.display = 'none';
+                termOverlay.innerHTML = `
+                    <h3 class="font-serif text-2xl text-white mb-2">Bağlantı Başarılı</h3>
+                    <p class="text-gold font-mono text-xs mb-6 tracking-widest">TCP/IP VERIFIED</p>
+                    <button onclick="startTerminal()" class="border border-white/20 text-gray-400 hover:text-white px-6 py-2 rounded font-mono text-xs transition-all">TEKRARLA</button>
+                `;
+            }, 3500);
+        }
+
+        /* --- 5. AKORDEON --- */
+        function toggleAcc(id, btn) {
+            const content = document.getElementById(id);
+            const icon = btn.querySelector('svg');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.classList.remove('rotate-180');
+            } else {
+                content.classList.add('expanded');
+                icon.classList.add('rotate-180');
+            }
+        }
+
+        // Başlangıç
+        document.addEventListener('DOMContentLoaded', initTimeline);
+    </script>
+</body>
+</html>
